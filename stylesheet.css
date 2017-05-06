@@ -1,15 +1,32 @@
-leftmenu {
-	float: left;
-	width: 200px;
-}
-
-header {
+#header {
 	height: 200px;
 }
 
-footer {
+#footer {
 	height: 200px;
 }
 h1 {
+	background-color: darkturquoise;
 	text-align: center;
 }
+
+/*link definitions */
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		width: 200px;
+		background-color: turquoise;
+	}
+
+	li a {
+		display: block;
+		color: #000;
+		padding: 8px 16px;
+		text-decoration: none;
+	}
+
+	/* Change the link color on hover */
+	li a:hover {
+		border-left: 6px solid navy;
+	}
