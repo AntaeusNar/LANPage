@@ -50,6 +50,7 @@ section {
 
 #top h1{
 	text-align: center;
+	display: block;
 }
 
 #top p{
