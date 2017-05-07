@@ -1,22 +1,31 @@
-#header {
-	height: 200px;
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
-#footer {
-	height: 200px;
+.container {
+	position: relative;
 }
-h1 {
-	background-color: darkturquoise;
-	text-align: center;
+
+nav {
+	position: absolute;
+	left: 0px;
+	width: 200px;
+	background-color: turquoise
 }
+
+section {
+  /* position is static by default */
+  margin-left: 200px;
+}
+
 
 /*link definitions */
 	ul {
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
-		width: 25px;
-		background-color: turquoise;
 	}
 
 	li a {
@@ -30,3 +39,17 @@ h1 {
 	li a:hover {
 		border-left: 6px solid navy;
 	}
+	
+#top {
+	background-color: darkturquoise;
+	display: block;
+	margin: 0 auto;
+}
+
+#top h1{
+	text-align: center;
+}
+
+#top p{
+	text-align: center;
+}
