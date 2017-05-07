@@ -12,12 +12,13 @@ nav {
 	position: absolute;
 	left: 0px;
 	width: 200px;
-	background-color: turquoise
+	background-color: darkturquoise
 }
 
 section {
   /* position is static by default */
   margin-left: 200px;
+  background-color: oldlace
 }
 
 
