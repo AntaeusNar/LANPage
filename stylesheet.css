@@ -6,6 +6,7 @@
 
 .container {
 	position: relative;
+	display: block;
 }
 
 nav {
