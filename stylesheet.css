@@ -39,13 +39,13 @@ section {
 
 	/* Change the link color on hover */
 	li a:hover {
+		background-color: turquoise;
 		border-left: 6px solid navy;
 	}
 	
 #top {
 	background-color: darkturquoise;
 	display: block;
-	margin: 0 auto;
 }
 
 #top h1{
