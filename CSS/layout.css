@@ -6,7 +6,15 @@
 	border;0px;
 }
 
-/*Layout*/
+img {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+}
+
+/*Layout -- General overrides and classes*/
+	width: 100%;
+	width: 100vw;
 
 body, html {
 	width: 100%;
@@ -49,9 +57,11 @@ img {
 
 
 
-#footer p{
+.footer p{
 	text-align: center;
 }
+/*Layout -- IDs*/
+
 
 /*link definitions */
 	ul {
@@ -66,7 +76,7 @@ img {
 		position:relative;
 	}
 
-	/* Change the link color on hover */
+	
 	li a:hover {
 		
 	}
