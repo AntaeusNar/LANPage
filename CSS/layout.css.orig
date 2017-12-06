@@ -1,0 +1,125 @@
+/* Resets and overrides */
+
+*{
+	box-sizing:border-box;
+	margin:0px;
+	border;0px;
+}
+
+/*Layout*/
+
+body, html {
+	width: 100%;
+	width: 100vw;
+	padding: 0;
+	margin: 0;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+<<<<<<< HEAD:layout.css
+.flex-row{
+	display:flex;
+	flex-wrap:nowrap;
+	text-align:center;
+	justify-content:center;
+	
+}
+
+.flex-column{
+	display:flex;
+	flex-direction:column;
+}
+
+.placemark{
+	background-color:DodgerBlue;
+	margin: 5px;
+	padding: 5px;
+	text-align: left;
+	
+}
+
+#header h1{
+	text-align: center;
+}
+
+
+
+
+=======
+img {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	
+}
+
+/*Layout -- General overrides and classes*/
+html{
+	max-width:1900px;
+	width: 100%;
+	width: 100vw;
+}
+.page{
+	position: relative;
+	clear:both;
+	margin: 10px;
+	
+}
+
+.header{
+	position: relative;
+	clear: both;
+}
+.header h1{
+	text-align: center;
+}
+
+.nav-vert{
+	position: relative;
+	width: 200px;
+	float: left
+}
+
+.nav-hort{
+	
+	
+}
+
+.col-alpha{
+	position: relative;
+	float: left;
+}
+
+.footer{
+	position: relative;
+	clear:both;
+}
+>>>>>>> 52c68a48dabf0256001d26e473e3441beca33786:CSS/layout.css
+
+.footer p{
+	text-align: center;
+}
+/*Layout -- IDs*/
+
+
+/*link definitions */
+	ul {
+		list-style-type: none;
+		position:relative;
+	}
+
+	li a {
+		display: block;
+		padding: 8px 16px;
+		text-decoration: none;
+		position:relative;
+	}
+
+	
+	li a:hover {
+		
+	}
