@@ -1,12 +1,35 @@
-<script>
+<script type="text/javascript">
 
 //this should only get called when the body is done loading.....
 function initElement() {
-	//alert("Page is Loaded");
+	//MainHeader Testing
 	var mainheader = document.getElementById("mainheader");
-	mainheader.innerHTML = mainHeader.innerHTML + "<p>Finsished Loading</p>";
-}
+	
+	if (mainheader == null) {
+		alert("mainheader is null!");
+	}else {
+		alert("well we found the mainheader");
+	}
+	mainheader.innerHTML = mainheader.innerHTML + "<p>Finsished Loading</p>";
+	
+	//footer testing
+	var footer = document.getElementById("footer");
+	footer.onclick = showAlert;
+	
+	
+};
 
+//this will load when the atlascon.htm is done loading....I hope
+function initatlascon(){
+	alert("atlascon finished loading");
+	//sub doc element testing
+	var loadkml = document.getElementById("Loadkml");
+	if (loadkml == null) {
+		alert("can't find loadkml");
+	};
+	loadkml.onclick = showAlert;
+};
+	
 // update element generic function
 function updateElement($id, $content) {
 	document.getElementById($id).innerHTML = $content;
@@ -28,10 +51,10 @@ function loadDoc($id, $path) {
 
 
 //onclick functions
-document.getElementById("Loadkml").onclick = showAlert;
+
 
 function showAlert(event) {
 	alert("Holy Crap this finally did something");
-}
+};
 
 </script>
