@@ -213,6 +213,9 @@ function displayTotal ($totDis, $totTime) {
 
 //Main page
 
+if (isset($_GET['kml'])){
+	loadkml(1,1,1,1);
+}
 
 
 
