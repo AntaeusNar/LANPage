@@ -95,9 +95,12 @@ function loadkml($startDate, $endDate,$startTime, $endTime) {
 		//okay, we are going to drop out of PHP into HTML, then using a script to get the PHP back into HTML...
 	
 		?>
-		<!--HTML line 98-->
+		
+		<!--HTML line 99-->
 		<script type="text/javascript">
-			document.getElementById("myColumn1").innerHTML = " <!--hidden HTML line 100-->
+			document.getElementById("status").innerHTML = "load kml sucessful";
+			document.getElementById("myColumn1").innerHTML = "
+			<!--hidden HTML line 100-->
 			<!--Placemark line 100-->
 				<?PHP
 				echo "<!--line 102-->";
@@ -195,6 +198,7 @@ function displayTotal ($totDis, $totTime) {
 	
 	<!--I have now dropped into pure HTML....-->
 	<script>
+		updateElement("2nd-column","This got updated");
 		document.getElementById("2nd-column").innerHTML = "
 			<?php
 				//this should be injecting the following PHP into a script, into HTML into PHP...I hope
@@ -208,6 +212,18 @@ function displayTotal ($totDis, $totTime) {
 }
 
 //Main page
+
+include "/atlascon.htm";
+
+?>
+
+<script>
+	window.onload = function () {
+		updateElement("status", "2nd Load");
+	};
+</script>
+
+<?PHP
 
 
 
