@@ -2,7 +2,7 @@
 
 function updateElement($id, $content) {
 	document.getElementById($id).innerHTML = $content;
-}
+	};
 
 function loadDoc($id, $path) {
 		var xhttp = new XMLHttpRequest();

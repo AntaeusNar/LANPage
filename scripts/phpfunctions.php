@@ -82,7 +82,7 @@ function loadkml($startDate, $endDate,$startTime, $endTime) {
 	//request the kml info from googleTimeline and send the Placemark info to the placemark function
 	
 	/*load the kml file into simplexml -- need to build out this section*/
-	$xml=simplexml_load_file("history-2017-12-01.kml");
+	$xml=simplexml_load_file("kmldata/history-2017-12-01.kml");
 	
 	//error checking
 	if ($xml === false) {
@@ -213,12 +213,6 @@ function displayTotal ($totDis, $totTime) {
 
 //Main page
 
-include "/atlascon.htm";
-
-
-
-
-loadkml(1,1,1,1);
 
 
 
@@ -226,70 +220,3 @@ loadkml(1,1,1,1);
 
 
 
-//funtion for exporting the information
-
-/*
-	//load the kml file into simplexml//
-	$xml=simplexml_load_file("history-2017-12-01.kml");
-	//error checking
-	if ($xml === false) {
-		echo "Failed loading XML: ";
-		foreach(libxml_get_errors() as $error) {
-			echo "<br>", $error->message;
-		}
-	} else {
-		//set some html stuff
-			
-			
-			
-		//cyle through each Placemark
-		foreach ($xml->Document->Placemark as $Placemark) {
-			
-			echo "<div class='placemark'>";
-			//Display the name and address
-			echo "<strong>", $Placemark->name,"</strong> ", $Placemark->address;
-			
-			//check distiance traveled and display if needed
-			if (round($Placemark->ExtendedData->Data[2]->value / 1609.34, 1) >.1) {
-				echo round($Placemark->ExtendedData->Data[2]->value / 1609.34, 1) , " miles ";
-				
-				//add the distance to $totDis
-				$totDis = $totDis+round($Placemark->ExtendedData->Data[2]->value / 1609.34, 1);
-				
-			}
-			//set datetimes to the UTC they are
-			$startTimeUTC = new DateTime($Placemark->TimeSpan->begin, new DateTimeZone('UTC'));
-			$endTimeUTC = new DateTime($Placemark->TimeSpan->end, new DateTimeZone('UTC'));
-			
-			//calculate the interval
-			$interval = date_diff($startTimeUTC, $endTimeUTC);
-			
-			//add the interval to $totDur
-			$totDurE->add($interval);
-			
-			//convert start and end times into PST from UTC
-			$startTimeALA = $startTimeUTC;
-			$startTimeALA->setTimeZone(new DateTimeZone('America/Los_Angeles'));
-			$endTimeALA = $endTimeUTC;
-			$endTimeALA->setTimeZone(new DateTimeZone('America/Los_Angeles'));
-			
-			//Display the interval and start/end times
-			echo $interval->format("<br>Duration:%H:%I ");
-			echo "Start: ", $startTimeALA->format("Y-m-d H:i ");
-			echo "End: ", $endTimeALA->format("Y-m-d H:i"), "<br>";
-			echo "</div>";
-		}
-		
-		//figure out the hours and mins from all this date and totDur crap
-		$diff = $totDurE->diff($totDurF);
-		$hours = $diff->h;
-		$min = $diff->i;
-		$hours = $hours + ($diff->days*24);
-		
-		//display remaining info and close the <div>
-		echo "<div class='placemark'>";
-		echo "Total Distance: ", $totDis, " miles.      Total Time: ", $hours, ":", $min;
-		echo "</div>";
-	}
-
-*/
