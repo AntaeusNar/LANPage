@@ -48,16 +48,34 @@ As you can see this is setup as:
 		name
 		address
 		ExtendedData
-			Data
+			Data[0] (email)
 				value
-			Data
+			Data[1] (category)
 				value
-			Data [3] (travel distiance in meters)
+			Data [2] (travel distiance in meters)
 				value
 		description
+		point
+			coordinates
+		gx:track...
 		Timespan (times are in UMT)
 			begin
 			end 
+			
+The Version we care about is:
+	Placemark
+		name
+		address
+		ExtendedData
+			Data[0]
+				value
+			Data[1]
+				value
+			Data[2]
+				value
+		Timespan
+			begin
+			end
 */
 
 //variables
