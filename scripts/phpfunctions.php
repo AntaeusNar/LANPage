@@ -68,11 +68,11 @@ The Version we care about is:
 		address
 		ExtendedData
 			Data[0]
-				value
+				value (email)
 			Data[1]
-				value
+				value (Category)
 			Data[2]
-				value
+				value (distance)
 		Timespan
 			begin
 			end
