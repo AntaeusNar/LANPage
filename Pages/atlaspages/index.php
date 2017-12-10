@@ -25,10 +25,10 @@ class CNavigation {
 //load header.htm file - which loads css
 include "HTML/templates/header.htm";
 
+//call to generate mainmenu based off of the array mainmenu
 echo CNavigation::GenerateMenu($mainmenu);
 
-//load mainmenu.htm file
-//include "HTML/templates/mainmenu.htm";
+
 //load index.htm which is the main veiw content
 include "HTML/templates/index.htm";
 //load footer.htm
