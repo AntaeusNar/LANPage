@@ -41,12 +41,13 @@ a:hover {
 /*id*/
 #header{
 	text-align: center;
-}
-
-#header{
 	background-color:DodgerBlue;
+	flex: 0 0 100%;
 }
 
+#indexpage{
+	flex: 0 0 100%;
+}
 
 #nav-vert{
 	background-color:DodgerBlue;
