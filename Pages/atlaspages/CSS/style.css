@@ -23,11 +23,6 @@ body html {
 	margin: 0;
 }
 
-img {
-	max-width: 100%;
-	max-height: 100%;
-}
-
 .flex-row{
 	display:flex;
 	flex-wrap:nowrap;
@@ -53,14 +48,26 @@ img {
 	text-align: center;
 }
 
-
-
-
-
 .footer p{
 	text-align: center;
 }
-/*Layout -- IDs*/
+
+
+#header{
+	background-color:DodgerBlue;
+}
+#header h1{
+	
+}
+
+#nav-vert{
+	background-color:DodgerBlue;
+}
+
+#footer{
+	background-color:DodgerBlue;
+}
+
 
 
 /*link definitions */
@@ -78,5 +85,7 @@ img {
 
 	
 	li a:hover {
+		background-color: turquoise;
+		border-left: 6px solid navy;
 		
 	}
