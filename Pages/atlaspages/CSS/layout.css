@@ -6,9 +6,17 @@
 	border;0px;
 }
 
-/*Layout*/
+img {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+}
 
-body, html {
+/*Layout -- General overrides and classes*/
+	width: 100%;
+	width: 100vw;
+
+body html {
 	width: 100%;
 	width: 100vw;
 	padding: 0;
@@ -20,7 +28,6 @@ img {
 	max-height: 100%;
 }
 
-<<<<<<< HEAD:layout.css
 .flex-row{
 	display:flex;
 	flex-wrap:nowrap;
@@ -49,56 +56,6 @@ img {
 
 
 
-=======
-img {
-	width: auto;
-	height: auto;
-	max-width: 100%;
-	
-}
-
-/*Layout -- General overrides and classes*/
-html{
-	max-width:1900px;
-	width: 100%;
-	width: 100vw;
-}
-.page{
-	position: relative;
-	clear:both;
-	margin: 10px;
-	
-}
-
-.header{
-	position: relative;
-	clear: both;
-}
-.header h1{
-	text-align: center;
-}
-
-.nav-vert{
-	position: relative;
-	width: 200px;
-	float: left
-}
-
-.nav-hort{
-	
-	
-}
-
-.col-alpha{
-	position: relative;
-	float: left;
-}
-
-.footer{
-	position: relative;
-	clear:both;
-}
->>>>>>> 52c68a48dabf0256001d26e473e3441beca33786:CSS/layout.css
 
 .footer p{
 	text-align: center;

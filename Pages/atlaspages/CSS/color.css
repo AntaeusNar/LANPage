@@ -3,24 +3,22 @@
 	
 }
 
-.header{
+#header{
 	background-color:darkturquoise;
 }
-.header h1{
+#header h1{
 	
 }
 
-.nav-vert{
+#nav-vert{
 	background-color:darkturquoise;
 }
 
-.footer{
+#footer{
 	background-color:darkturquoise;
 }
 
-.footer p{
-	
-}
+
 
 /*link definitions */
 	ul {
@@ -28,7 +26,8 @@
 	}
 
 	li a {
-		color: #000;
+		
+		
 		
 	}
 
