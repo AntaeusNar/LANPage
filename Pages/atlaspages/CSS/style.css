@@ -6,22 +6,61 @@
 	border;0px;
 }
 
-img {
-	width: auto;
-	height: auto;
-	max-width: 100%;
-}
-
-/*Layout -- General overrides and classes*/
-	width: 100%;
-	width: 100vw;
-
+/*Elemets*/
 body html {
 	width: 100%;
 	width: 100vw;
 	padding: 0;
 	margin: 0;
 }
+
+img {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+}
+
+
+ul {
+	list-style-type: none;
+	position:relative;
+}
+
+li a {
+	display: block;
+	padding: 8px 16px;
+	text-decoration: none;
+	position:relative;
+}
+
+	
+li a:hover {
+	background-color: turquoise;
+	border-left: 6px solid navy;
+}
+
+
+/*id*/
+#header{
+	text-align: center;
+}
+
+#header{
+	background-color:DodgerBlue;
+}
+
+
+#nav-vert{
+	background-color:DodgerBlue;
+}
+
+#footer{
+	background-color:DodgerBlue;
+	text-align: center;
+}
+
+/*class*/
+
 
 .flex-row{
 	display:flex;
@@ -44,48 +83,4 @@ body html {
 	
 }
 
-#header h1{
-	text-align: center;
-}
 
-.footer p{
-	text-align: center;
-}
-
-
-#header{
-	background-color:DodgerBlue;
-}
-#header h1{
-	
-}
-
-#nav-vert{
-	background-color:DodgerBlue;
-}
-
-#footer{
-	background-color:DodgerBlue;
-}
-
-
-
-/*link definitions */
-	ul {
-		list-style-type: none;
-		position:relative;
-	}
-
-	li a {
-		display: block;
-		padding: 8px 16px;
-		text-decoration: none;
-		position:relative;
-	}
-
-	
-	li a:hover {
-		background-color: turquoise;
-		border-left: 6px solid navy;
-		
-	}
