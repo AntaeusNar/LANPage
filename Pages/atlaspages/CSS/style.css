@@ -31,12 +31,14 @@ li a {
 	padding: 8px 16px;
 	text-decoration: none;
 	position:relative;
+	color: black;
 }
 
 	
 li a:hover {
-	background-color: turquoise;
-	border-left: 6px solid navy;
+	background-color: black;
+	border-left: 6px solid silver;
+	color: silver;
 }
 
 
@@ -56,7 +58,7 @@ li a:hover {
 
 #footer{
 	background-color:DodgerBlue;
-	text-align: center;
+	
 }
 
 /*class*/
