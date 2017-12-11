@@ -51,6 +51,16 @@ class Placemark {
 	protected $editTimeEnd;
 	protected $TimeDurCur;
 	
+	//__construct
+	
+	//math
+	
+	//display
+	
+	//what do you want?
+	
+	//export?
+	
 	
 }
 ?>
