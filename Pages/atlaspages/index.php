@@ -3,6 +3,7 @@
 //Require Classes
 require_once "CLASSES/class.php";
 require_once "CONFIG/cfg.php";
+require_once "FUNCTIONS/functions.php";
 
 //vars
 
