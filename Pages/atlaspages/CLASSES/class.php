@@ -1,4 +1,7 @@
 <?php
+
+
+
 class Menu {
 	//this class is a div flex box menu
 	
@@ -25,5 +28,29 @@ class Menu {
 		$html .="\n</div>\n";
 		return $html;
 	}
+}
+
+
+class Placemark {
+	//this class should be one for each placemark, it will be the object
+	//where we store all of the placemark info from the kml file reading
+	
+	//from kml
+	protected $name;
+	protected $address;
+	protected $email;
+	protected $catagory;
+	protected $distance;
+	protected $timeBegin;
+	protected $timeEnd;
+	
+	//internally generated/other
+	protected $TimeType;
+	protected $TimeDurOrg;
+	protected $editTimeBegin;
+	protected $editTimeEnd;
+	protected $TimeDurCur;
+	
+	
 }
 ?>

@@ -1,7 +1,7 @@
 <?php
 
 //Require Classes
-require_once "CLASSES/class.menu.php";
+require_once "CLASSES/class.php";
 require_once "CONFIG/cfg.php";
 
 //vars
