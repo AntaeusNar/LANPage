@@ -30,8 +30,12 @@ class Menu {
 	}
 }
 
-
-class Placemark {
+class complexkml extends simpleXMLelement {
+	//this should extend the simplexml base class to include the following things
+	
+	
+}
+/*class Placemark {
 	//this class should be one for each placemark, it will be the object
 	//where we store all of the placemark info from the kml file reading
 	
@@ -63,4 +67,5 @@ class Placemark {
 	
 	
 }
+*/
 ?>
