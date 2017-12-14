@@ -48,9 +48,9 @@ function loadkml() {
 		name
 		address
 		ExtendedData
-			Data
+			Data (Email)
 				value
-			Data
+			Data (Category)
 				value
 			Data [3] (travel distiance in meters)
 				value
@@ -73,9 +73,16 @@ function loadkml() {
 	} 
 	else {
 		//no errors on load found moving on
-		//turn the entire xml into an array of objects
-		//create an object for each placemark
 		
+		//Check to see if this an edited file
+		if ($xml->Document->status == ready) {
+			//shit is ready yo
+			
+		}
+		else{
+			//need to initalis the doc
+			
+		}
 	
 	
 	}
