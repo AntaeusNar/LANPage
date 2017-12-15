@@ -105,11 +105,20 @@ function loadkml() {
 				$startTimeALA->setTimeZone(new DateTimeZone('America/Los_Angeles'));
 				$endTimeALA = $endTimeUTC;
 				$endTimeALA->setTimeZone(new DateTimeZone('America/Los_Angeles'));
-				$Placemarks->TimeSpan->begin = $startTimeALA->format("Y-m-d H:i ");
+				//check dates
+				$startdate = $startTimeALA->format("Y-m-d");
+				$enddate = $endTimeALA->format("Y-m-d");
+				if ($startdate == $enddate){
+					$Placemarks->TimeSpan->begin = $startTimeALA->format("H:i");
+					$Placemarks->TimeSpan->end = $endTimeALA->format("H:i");
+				}else{
+				$Placemarks->TimeSpan->begin = $startTimeALA->format("Y-m-d H:i");
 				$Placemarks->TimeSpan->end = $endTimeALA->format("Y-m-d H:i");
+				}
 				
 				//calculate the interval or time duration
 				$interval = date_diff($startTimeUTC, $endTimeUTC);
+				$Placemarks->addChild('interval', $interval->format("%H:%I"));
 				
 				
 				echo displayPlacemark($Placemarks);
@@ -139,13 +148,20 @@ function displayPlacemark($Placemark){
 	//Display Name
 	$html .= "<strong>" .$Placemark->name ."</strong> ";
 	
+	//display miles if it is there
+	if ($Placemark->name == "Driving"){
+		$html .= $Placemark->ExtendedData->Data[2]->value . " Miles <br>";
+	} else {
 	//print the address
 	$html .= $Placemark->address ."<br>";
-	
-	//display miles if it is there
-	if ($Placemark->name == "Driving" OR $Placemark->name == "Moving"){
-		$html .= $Placemark->ExtendedData->Data[2]->value . " Miles";
 	}
+	
+	//show times
+	$html .= "Start Time: " .$Placemark->TimeSpan->begin ."     Total Time:" .$Placemark->interval ."<br>";
+	$html .= "End Time: " .$Placemark->TimeSpan->end ." ";
+	
+	
+	
 	
 	$html .= "</div>";
 	
