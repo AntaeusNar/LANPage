@@ -22,7 +22,9 @@ echo $MainMenu->display();
 
 //load index.htm which is the main veiw content
 include "HTML/templates/index.htm";
+
 //load footer.htm
 include "HTML/templates/footer.htm";
+
 
 ?>

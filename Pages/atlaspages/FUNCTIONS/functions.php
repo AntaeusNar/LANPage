@@ -61,7 +61,7 @@ function loadkml() {
 */
 
 	//loads the given kml into an xml with simplexml
-	$xml=simplexml_load_file("");
+	$xml=simplexml_load_file("KML/history-2017-12-01.kml");
 	
 	//error checking
 	if ($xml === false) {
@@ -75,16 +75,90 @@ function loadkml() {
 		//no errors on load found moving on
 		
 		//Check to see if this an edited file
-		if ($xml->Document->status == ready) {
+		if ($xml->Document->status == 'ready') {
 			//shit is ready yo
+			echo "<br><p> file is ready</p>";
 			
 		}
 		else{
 			//need to initalis the doc
-			
+			//echo "<br><p> file is not ready, but now we can fix it</p>";
+			foreach ($xml->Document->Placemark as $Placemarks){
+				
+				//Change meters to miles
+				$Placemarks->ExtendedData->Data[2]->value = round($Placemarks->ExtendedData->Data[2]->value / 1609.34, 1);
+				
+				//Change moving to driving
+				if ($Placemarks->name == "Moving"){
+					$Placemarks->name = "Driving";
+				}
+				
+				//Change catagory to personal
+				$Placemarks->ExtendedData->Data[1]->value = "Personal";
+				
+				//Change times
+				$startTimeUTC = new DateTime($Placemarks->TimeSpan->begin, new DateTimeZone('UTC'));
+				$endTimeUTC = new DateTime($Placemarks->TimeSpan->end, new DateTimeZone('UTC'));
+				
+				//convert start and end times into PST from UTC
+				$startTimeALA = $startTimeUTC;
+				$startTimeALA->setTimeZone(new DateTimeZone('America/Los_Angeles'));
+				$endTimeALA = $endTimeUTC;
+				$endTimeALA->setTimeZone(new DateTimeZone('America/Los_Angeles'));
+				$Placemarks->TimeSpan->begin = $startTimeALA->format("Y-m-d H:i ");
+				$Placemarks->TimeSpan->end = $endTimeALA->format("Y-m-d H:i");
+				
+				//calculate the interval or time duration
+				$interval = date_diff($startTimeUTC, $endTimeUTC);
+				
+				
+				echo displayPlacemark($Placemarks);
+			}
 		}
 	
 	
 	}
 }
+
+function placemarkinti($Placemark) {
+	//this is going to initalis the placemark, adding the additionall info we need
+	
+	//convert the time zones to PST
+	
+	
+}
+function displayPlacemark($Placemark){
+	//This will build a display of the placemark...hopefully alot of the logic will be removed once we edit things
+	
+	//start with the div and class
+	$html = "<div class=placemark>";
+	
+	//display catagory
+	$html .= $Placemark->ExtendedData->Data[1]->value .": ";
+	
+	//Display Name
+	$html .= "<strong>" .$Placemark->name ."</strong> ";
+	
+	//print the address
+	$html .= $Placemark->address ."<br>";
+	
+	//display miles if it is there
+	if ($Placemark->name == "Driving" OR $Placemark->name == "Moving"){
+		$html .= $Placemark->ExtendedData->Data[2]->value . " Miles";
+	}
+	
+	$html .= "</div>";
+	
+	return $html;
+	
+}
+
+function updateKML(){
+	//this should cycle through all of the relavent placemarks and totalup the needed info
+}
+
+function displayKML() {
+	//this should display the total kml doc
+}
+	
 ?>
