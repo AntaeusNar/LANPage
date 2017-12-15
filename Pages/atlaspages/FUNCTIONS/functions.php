@@ -83,6 +83,17 @@ function loadkml() {
 		else{
 			//need to initalis the doc
 			//echo "<br><p> file is not ready, but now we can fix it</p>";
+			
+			//add a few peices of information to the xml->document
+			
+			//Time is stupid or i am
+			$now1 = new DateTime('now');
+			$now2 = clone $now1;
+			$xml->Document->addChild('TotalTime');
+			$xml->Document->addChild('TotalDis');
+			$xml->Document->addChild('StartDate');
+			$xml->Document->addChild('EndDate');
+			
 			foreach ($xml->Document->Placemark as $Placemarks){
 				
 				//Change meters to miles
@@ -105,22 +116,40 @@ function loadkml() {
 				$startTimeALA->setTimeZone(new DateTimeZone('America/Los_Angeles'));
 				$endTimeALA = $endTimeUTC;
 				$endTimeALA->setTimeZone(new DateTimeZone('America/Los_Angeles'));
+				
 				//check dates
 				$startdate = $startTimeALA->format("Y-m-d");
 				$enddate = $endTimeALA->format("Y-m-d");
+				$Placemarks->TimeSpan->addChild('date', $startdate);
 				if ($startdate == $enddate){
 					$Placemarks->TimeSpan->begin = $startTimeALA->format("H:i");
 					$Placemarks->TimeSpan->end = $endTimeALA->format("H:i");
+					
 				}else{
 				$Placemarks->TimeSpan->begin = $startTimeALA->format("Y-m-d H:i");
 				$Placemarks->TimeSpan->end = $endTimeALA->format("Y-m-d H:i");
 				}
 				
+				echo "Total Interval 1: " .$xml->document->TotalTime ." -133- <br>";
 				//calculate the interval or time duration
 				$interval = date_diff($startTimeUTC, $endTimeUTC);
 				$Placemarks->addChild('interval', $interval->format("%H:%I"));
+				echo "Current Interval: " .$Placemarks->interval ." -137- <br>";
 				
+				//add interval to xml->document->totaltime
+				//looks like for this to work, i need to make a datetime variable out of the current total time, add the interval, then convert the answer back into a string....yay!
+				if ($xml->document->TotalTime == null){
+					$xml->document->TotalTime = $interval->format("%H:%I");
+					echo $xml->document->TotalTime ." -143- <br>";
+				} else {
+					$CurrentIntervalTotal = new datetime($xml->document->TotalTime);
+					echo $CurrentIntervalTotal->format("%H:%I") ." -145- <br>";
+					$CurrentIntervalTotal2 = date_add($CurrentIntervalTotal, $interval);
+					$xml->document->TotalTime = $CurrentIntervalTotal2->format('%H:%I');
+				}
+				//$xml->document->TotalTime = date_diff($now1, date_add($now2, $interval));
 				
+				echo "Total Interval 2: " .$xml->document->TotalTime ." -151-";
 				echo displayPlacemark($Placemarks);
 			}
 		}
@@ -140,10 +169,10 @@ function displayPlacemark($Placemark){
 	//This will build a display of the placemark...hopefully alot of the logic will be removed once we edit things
 	
 	//start with the div and class
-	$html = "<div class=placemark>";
+	$html = "<div class= 'placemark " .$Placemark->ExtendedData->Data[1]->value ."'>";
 	
 	//display catagory
-	$html .= $Placemark->ExtendedData->Data[1]->value .": ";
+	$html .= $Placemark->ExtendedData->Data[1]->value .": " .$Placemark->TimeSpan->date ."<br>";
 	
 	//Display Name
 	$html .= "<strong>" .$Placemark->name ."</strong> ";
@@ -157,7 +186,7 @@ function displayPlacemark($Placemark){
 	}
 	
 	//show times
-	$html .= "Start Time: " .$Placemark->TimeSpan->begin ."     Total Time:" .$Placemark->interval ."<br>";
+	$html .= "Start Time: " .$Placemark->TimeSpan->begin ."     Total Time: " .$Placemark->interval ."<br>";
 	$html .= "End Time: " .$Placemark->TimeSpan->end ." ";
 	
 	
