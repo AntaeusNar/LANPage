@@ -90,14 +90,25 @@ function loadkml() {
 			$now1 = new DateTime('now');
 			$now2 = clone $now1;
 			$xml->Document->addChild('TotalTime');
-			$xml->Document->addChild('TotalDis');
+			$xml->Document->addChild('DisTotal');
 			$xml->Document->addChild('StartDate');
 			$xml->Document->addChild('EndDate');
+			//$xml->Document->TotalTime = 0;
+			
+			//Start the Placemark Column
+			echo '<div class="flex-column" id="placemarks">' .'<!--Start Placemark Column-->' ."\n";
 			
 			foreach ($xml->Document->Placemark as $Placemarks){
 				
 				//Change meters to miles
 				$Placemarks->ExtendedData->Data[2]->value = round($Placemarks->ExtendedData->Data[2]->value / 1609.34, 1);
+				//add miles to total miles
+				$CurrentDis = (float)$Placemarks->ExtendedData->Data[2]->value;
+				$CurTotDis = (float)$xml->Document->DisTotal;
+				$NewTotDis = $CurrentDis + $CurTotDis;
+				$xml->Document->DisTotal = $NewTotDis;
+				echo "Total Dis: " .$xml->Document->DisTotal ."<br>";
+				echo "Total Time: " .$xml->Document->TotalTime ."<br>";
 				
 				//Change moving to driving
 				if ($Placemarks->name == "Moving"){
@@ -138,25 +149,37 @@ function loadkml() {
 				
 				//add interval to xml->document->totaltime
 				//looks like for this to work, i need to make a datetime variable out of the current total time, add the interval, then convert the answer back into a string....yay!
-				if ($xml->document->TotalTime == null){
-					$xml->document->TotalTime = $interval->format("P%dDT%HH%iM");
+				$test = $xml->Document->TotalTime;
+				if ($test === null){
+					$xml->Document->TotalTime = $interval->format("P%dDT%HH%iM");
+					echo "Total Time was Empty:";
 					//Debug echo "Opening Interval: " .$xml->document->TotalTime ." -143- <br>";
 				} else {
 					//Debug Echo "Loaded Interval per XML: " .$xml->document->TotalTime ." -145- <br>";
-					$CurrentIntervalTotal = new DateInterval($xml->document->TotalTime);
+					$CurrentIntervalTotal = new DateInterval($xml->Document->TotalTime);
 					if ($CurrentIntervalTotal == false){
 						//Debug echo "Error creating datetime on line 146<br>";
 					}else{
 						//Debug echo "Loaded Interval As DateTime Object: " .$CurrentIntervalTotal->format("P%dDT%HH%iM") ." -147- <br>";
 						$CurrentIntervalTotal = IntervalAdd($CurrentIntervalTotal, $interval);
-						$xml->document->TotalTime = $CurrentIntervalTotal->format("P%dDT%HH%iM");
+						$xml->Document->TotalTime = $CurrentIntervalTotal->format("P%dDT%HH%iM");
 					}
 				}
 				//$xml->document->TotalTime = date_diff($now1, date_add($now2, $interval));
 				
 				//Debug echo "Total Interval 2: " .$xml->document->TotalTime ." -153-";
-				echo displayPlacemark($Placemarks);
+				
+				echo displayPlacemark($Placemarks) ."\n";
+				
 			}
+			echo '</div>' .'<!--End Placemark Column-->'. "\n\n";
+			//show main details in next column
+			echo '<div class="flex-column" id="totals">' ."\n";
+			echo '<div class="placemark">';
+			$TotalTime = new DateInterval($xml->Document->TotalTime);
+			echo 'Total Time: ' .$TotalTime->format("%d:%H:%I") ."<br>";
+			echo 'Total Miles: ' .$xml->Document->TotalDis;
+			echo '</div>' ."\n";
 		}
 	
 	
