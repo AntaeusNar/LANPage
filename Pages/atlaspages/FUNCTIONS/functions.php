@@ -130,31 +130,31 @@ function loadkml() {
 				$Placemarks->TimeSpan->end = $endTimeALA->format("Y-m-d H:i");
 				}
 				
-				echo "Total Interval 1: " .$xml->document->TotalTime ." -133- <br>";
+				//Debug echo "Total Interval 1: " .$xml->document->TotalTime ." -133- <br>";
 				//calculate the interval or time duration
 				$interval = date_diff($startTimeUTC, $endTimeUTC);
 				$Placemarks->addChild('interval', $interval->format("P%dDT%HH%iM"));
-				echo "Current Interval: " .$Placemarks->interval ." -137- <br>";
+				//Debug echo "Current Interval: " .$Placemarks->interval ." -137- <br>";
 				
 				//add interval to xml->document->totaltime
 				//looks like for this to work, i need to make a datetime variable out of the current total time, add the interval, then convert the answer back into a string....yay!
 				if ($xml->document->TotalTime == null){
 					$xml->document->TotalTime = $interval->format("P%dDT%HH%iM");
-					echo "Opening Interval: " .$xml->document->TotalTime ." -143- <br>";
+					//Debug echo "Opening Interval: " .$xml->document->TotalTime ." -143- <br>";
 				} else {
-					Echo "Loaded Interval per XML: " .$xml->document->TotalTime ." -145- <br>";
+					//Debug Echo "Loaded Interval per XML: " .$xml->document->TotalTime ." -145- <br>";
 					$CurrentIntervalTotal = new DateInterval($xml->document->TotalTime);
 					if ($CurrentIntervalTotal == false){
-						echo "Error creating datetime on line 146<br>";
+						//Debug echo "Error creating datetime on line 146<br>";
 					}else{
-						echo "Loaded Interval As DateTime Object: " .$CurrentIntervalTotal->format("P%dDT%HH%iM") ." -147- <br>";
+						//Debug echo "Loaded Interval As DateTime Object: " .$CurrentIntervalTotal->format("P%dDT%HH%iM") ." -147- <br>";
 						$CurrentIntervalTotal = IntervalAdd($CurrentIntervalTotal, $interval);
 						$xml->document->TotalTime = $CurrentIntervalTotal->format("P%dDT%HH%iM");
 					}
 				}
 				//$xml->document->TotalTime = date_diff($now1, date_add($now2, $interval));
 				
-				echo "Total Interval 2: " .$xml->document->TotalTime ." -153-";
+				//Debug echo "Total Interval 2: " .$xml->document->TotalTime ." -153-";
 				echo displayPlacemark($Placemarks);
 			}
 		}
