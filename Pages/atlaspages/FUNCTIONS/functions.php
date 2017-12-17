@@ -133,23 +133,28 @@ function loadkml() {
 				echo "Total Interval 1: " .$xml->document->TotalTime ." -133- <br>";
 				//calculate the interval or time duration
 				$interval = date_diff($startTimeUTC, $endTimeUTC);
-				$Placemarks->addChild('interval', $interval->format("%H:%I"));
+				$Placemarks->addChild('interval', $interval->format("P%dDT%HH%iM"));
 				echo "Current Interval: " .$Placemarks->interval ." -137- <br>";
 				
 				//add interval to xml->document->totaltime
 				//looks like for this to work, i need to make a datetime variable out of the current total time, add the interval, then convert the answer back into a string....yay!
 				if ($xml->document->TotalTime == null){
-					$xml->document->TotalTime = $interval->format("%H:%I");
-					echo $xml->document->TotalTime ." -143- <br>";
+					$xml->document->TotalTime = $interval->format("P%dDT%HH%iM");
+					echo "Opening Interval: " .$xml->document->TotalTime ." -143- <br>";
 				} else {
-					$CurrentIntervalTotal = new datetime($xml->document->TotalTime);
-					echo $CurrentIntervalTotal->format("%H:%I") ." -145- <br>";
-					$CurrentIntervalTotal2 = date_add($CurrentIntervalTotal, $interval);
-					$xml->document->TotalTime = $CurrentIntervalTotal2->format('%H:%I');
+					Echo "Loaded Interval per XML: " .$xml->document->TotalTime ." -145- <br>";
+					$CurrentIntervalTotal = new DateInterval($xml->document->TotalTime);
+					if ($CurrentIntervalTotal == false){
+						echo "Error creating datetime on line 146<br>";
+					}else{
+						echo "Loaded Interval As DateTime Object: " .$CurrentIntervalTotal->format("P%dDT%HH%iM") ." -147- <br>";
+						$CurrentIntervalTotal = IntervalAdd($CurrentIntervalTotal, $interval);
+						$xml->document->TotalTime = $CurrentIntervalTotal->format("P%dDT%HH%iM");
+					}
 				}
 				//$xml->document->TotalTime = date_diff($now1, date_add($now2, $interval));
 				
-				echo "Total Interval 2: " .$xml->document->TotalTime ." -151-";
+				echo "Total Interval 2: " .$xml->document->TotalTime ." -153-";
 				echo displayPlacemark($Placemarks);
 			}
 		}
@@ -186,7 +191,8 @@ function displayPlacemark($Placemark){
 	}
 	
 	//show times
-	$html .= "Start Time: " .$Placemark->TimeSpan->begin ."     Total Time: " .$Placemark->interval ."<br>";
+	$CurrentPlacemarkInterval = new DateInterval($Placemark->interval);
+	$html .= "Start Time: " .$Placemark->TimeSpan->begin ."     Total Time: " .$CurrentPlacemarkInterval->format("%H:%I") ."<br>";
 	$html .= "End Time: " .$Placemark->TimeSpan->end ." ";
 	
 	
@@ -206,4 +212,13 @@ function displayKML() {
 	//this should display the total kml doc
 }
 	
+	
+function IntervalAdd($Intv1, $Intv2){
+	//this should allow me to add to intervals together and return a total dateinterval
+	$a = new DateTime('00:00');
+	$b = clone $a;
+	$a->add($Intv1);
+	$a->add($Intv2);
+	return $b->diff($a);
+}
 ?>
