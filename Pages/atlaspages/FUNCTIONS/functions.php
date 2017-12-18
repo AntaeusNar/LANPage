@@ -91,17 +91,15 @@ function loadkml() {
 			$xml->Document->addChild('EndDate');
 			
 			//Start the Placemark Column
-			echo '<div class="flex-column" id="placemarks">' .'<!--Start Placemark Column-->' ."\n";
+			$html = '<div class="flex-column" id="placemarks">' .'<!--Start Placemark Column-->' ."\n";
 			
 			foreach ($xml->Document->Placemark as $Placemarks){
 				
 				//Change meters to miles and rounds to 0.00
 				$Placemarks->ExtendedData->Data[2]->value = round($Placemarks->ExtendedData->Data[2]->value / 1609.34, 1);
-				//add miles to total miles
+				//getting ready to add miles to total miles
 				$CurrentDis = (float)$Placemarks->ExtendedData->Data[2]->value;
 				$CurTotDis = (float)$xml->Document->DisTotal;
-				$NewTotDis = $CurrentDis + $CurTotDis;
-				$xml->Document->DisTotal = $NewTotDis;
 				
 				//Change moving to driving
 				if ($Placemarks->name == "Moving"){
@@ -138,36 +136,39 @@ function loadkml() {
 				$interval = date_diff($startTimeUTC, $endTimeUTC);
 				$Placemarks->addChild('interval', $interval->format("P%dDT%HH%iM"));
 				
-				//add interval to xml->document->totaltime
-				$test = $xml->Document->TotalTime;
-				if ($test == ''){
-					$xml->Document->TotalTime = $interval->format("P%dDT%HH%iM");
-				} else {
-					$CurrentIntervalTotal = new DateInterval($xml->Document->TotalTime);
-					if ($CurrentIntervalTotal == false){
-						echo "Error creating datetime on line 148ish in loadkml<br>";
-					}else{
-						$CurrentIntervalTotal = IntervalAdd($CurrentIntervalTotal, $interval);
-						$xml->Document->TotalTime = $CurrentIntervalTotal->format("P%dDT%HH%iM");
+				//check if this is a personal or business placemark
+				if ($Placemarks->ExtendedData->Data[1]->value == "Business"){
+					$test = $xml->Document->TotalTime;
+					//Add the Milage
+					$NewTotDis = $CurrentDis + $CurTotDis;
+					$xml->Document->DisTotal = $NewTotDis;
+					
+					//add interval to xml->document->totaltime
+					if ($test == ''){
+						$xml->Document->TotalTime = $interval->format("P%dDT%HH%iM");
+					} else {
+						$CurrentIntervalTotal = new DateInterval($xml->Document->TotalTime);
+						if ($CurrentIntervalTotal == false){
+							echo "Error creating datetime on line 148ish in loadkml<br>";
+						}else{
+							$CurrentIntervalTotal = IntervalAdd($CurrentIntervalTotal, $interval);
+							$xml->Document->TotalTime = $CurrentIntervalTotal->format("P%dDT%HH%iM");
+						}
 					}
 				}
 				
 				//Call the Placemark display function
-				echo displayPlacemark($Placemarks) ."\n";
+				$html .= displayPlacemark($Placemarks) ."\n";
 				
 			}
-			echo '</div>' .'<!--End Placemark Column-->'. "\n\n";
+			$html .= '</div>' .'<!--End Placemark Column-->'. "\n\n";
 			//show main details in next column
-			echo '<div class="flex-column" id="totals">' ."\n";
-			echo '<div class="placemark">';
-			$TotalTime = new DateInterval($xml->Document->TotalTime);
-			echo 'Total Time: ' .$TotalTime->format("%d:%H:%I") ."<br>";
-			echo 'Total Miles: ' .$xml->Document->DisTotal;
-			echo '</div>' ."\n";
+			$html .= TotalsDisplay($xml);
 		}
 	
 	
 	}
+	return $html;
 }
 
 
@@ -178,7 +179,9 @@ function displayPlacemark($Placemark){
 	$html = "<div class= 'placemark " .$Placemark->ExtendedData->Data[1]->value ."'>";
 	
 	//display catagory
-	$html .= $Placemark->ExtendedData->Data[1]->value .": " .$Placemark->TimeSpan->date ."<br>";
+	$html .= '<select form="totalform" name="catagory"><option value="Personal" selected>Personal</option><option value="Business">Business</option>';
+	//$html .= $Placemark->ExtendedData->Data[1]->value;
+	$html .= '</select>' .": " .$Placemark->TimeSpan->date ."<br>";
 	
 	//Display Name
 	$html .= "<strong>" .$Placemark->name ."</strong> ";
@@ -205,8 +208,28 @@ function displayPlacemark($Placemark){
 	
 }
 
-function formGen() {
-
+function TotalsDisplay($xml) {
+	//This will generate the display for the totals when given the $xml and return $html
+	
+	//basic framework
+	$html = '<div class="flex-column">' ."\n";
+	$html .= '<div class="placemark" id="totals">' . "\n" .'<form id="totalform" method="post">' ."\n";
+	
+	//test the Total time
+	if ($xml->Document->TotalTime !=''){
+		//dispay total time correctly
+		$TotalTime = new DateInterval($xml->Document->TotalTime);
+		$html .= 'Total Time: ' .$TotalTime->format("%d:%H:%I") ."<br>\n";
+	} else {
+		//just throwup whatever
+		$html .= 'Total Time: ' .$xml->Document->TotalTime ."<br>\n";
+	}
+	$html .= 'Total Miles: ' .$xml->Document->DisTotal ."<br>\n";
+	$html .= '<input type="submit" value="Update">'."\n";
+	$html .= '</form>' ."\n" .'</div>' ."\n" .'</div>' ."\n";
+	
+	return $html;
+	
 }
 	
 function IntervalAdd($Intv1, $Intv2){

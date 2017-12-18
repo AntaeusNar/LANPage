@@ -58,6 +58,12 @@ a:hover {
 	
 }
 
+#totals {
+	position: fixed;
+	top:100px;
+	right: 0;
+}
+
 /*class*/
 
 
