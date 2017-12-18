@@ -3,7 +3,7 @@
 //menu array
 $mainmenu = array(
 	'home' => array('text'=>'Home', 'url'=>'?p=home'),
-	'away' => array('text'=>'Away', 'url'=>'?p=away'),
+	'timetracker' => array('text'=>'Time Tracker', 'url'=>'?p=timetracker'),
 	'about'=> array('text'=>'About', 'url'=>'?p=about'),
 );
 
