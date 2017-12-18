@@ -4,10 +4,12 @@ class Model{
 	
 	//only accessable data
 	public $string;
+	public $times;
 	
 	public function __construct(){
 		//puts some stuff into the data
 		$this->string = "MVC + PHP = Awesome, click here!";
+		$this->times = 0;
 	}
 }
 
@@ -25,7 +27,7 @@ class View {
 	
 	//will output whatever is in the model string
 	public function output(){
-		return '<p><a href="MVC.php?action=clicked">' .$this->model->string ."</a></p>";
+		return '<p><a href="MVC.php?action=clicked&times='.$this->model->times .'">' .$this->model->string ."</a> You have clicked on this " .$this->model->times ." times.</p>";
 	}
 }
 
@@ -40,8 +42,9 @@ class Controller {
 	}
 	
 	//when passed a clicked action from the main page, this will change the model
-	public function clicked() {
+	public function clicked($times) {
 		$this->model->string = "Updated Data, thanks to MVC and PHP!";
+		$this->model->times = $times + 1;
 	}
 }
 
@@ -56,7 +59,7 @@ $view = new View($controller, $model);
 
 //if an action happens, this will pass it onto the controller
 if (isset($_GET['action']) && !empty($_GET['action'])){
-	$controller->{$_GET['action']}();
+	$controller->{$_GET['action']}($_GET['times']);
 }
 
 //displays the current view of the model....
