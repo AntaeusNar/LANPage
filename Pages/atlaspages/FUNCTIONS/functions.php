@@ -205,14 +205,9 @@ function displayPlacemark($Placemark){
 	
 }
 
-function updateKML(){
-	//this should cycle through all of the relavent placemarks and totalup the needed info
-}
+function formGen() {
 
-function displayKML() {
-	//this should display the total kml doc
 }
-	
 	
 function IntervalAdd($Intv1, $Intv2){
 	//this should allow me to add to intervals together and return a total dateinterval
